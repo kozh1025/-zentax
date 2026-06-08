@@ -1,44 +1,100 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>商務英語練習 · 自選題組 · 題組目錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentax Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0f2744;--gold:#c9922a;--bg:#f7f5f1}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;color:#222}
+
 .hd{background:var(--navy);padding:44px 20px 38px;text-align:center;position:relative;overflow:hidden}
 .hd::after{content:'ZENTAX';position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-family:'DM Serif Display',serif;font-size:6em;color:rgba(255,255,255,.04);pointer-events:none;white-space:nowrap}
 .brand{font-size:.72em;color:rgba(255,255,255,.35);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
 .hd-title{font-family:'DM Serif Display',serif;font-size:2em;color:#fff;margin-bottom:8px;line-height:1.2}
 .hd-sub{color:rgba(255,255,255,.45);font-size:.85em}
-.wrap{max-width:700px;margin:32px auto 0;padding:0 16px 60px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+
+.wrap{max-width:760px;margin:32px auto 0;padding:0 16px 60px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+
 .card{background:#fff;border-radius:14px;padding:22px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1.5px solid #e8e4dc;text-decoration:none;color:inherit;display:block;transition:transform .15s,box-shadow .15s}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.card-num{font-size:.72em;font-weight:700;color:var(--gold);letter-spacing:.08em;margin-bottom:6px;text-transform:uppercase}
-.card-title{font-size:.93em;font-weight:600;color:var(--navy);margin-bottom:10px;line-height:1.35}
-.card-meta{font-size:.78em;color:#a0a0a0;margin-bottom:16px}
+.card-title{font-size:.93em;font-weight:600;color:var(--navy);margin-bottom:16px;line-height:1.35}
 .card-link{background:var(--navy);color:#fff;text-align:center;padding:9px;border-radius:8px;font-size:.83em;font-weight:600}
+
+.loading{text-align:center;padding:60px 20px;color:#888}
+.spinner{width:28px;height:28px;border:3px solid #ddd;border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:60px;color:#aaa}
+
 .footer{text-align:center;padding:24px 16px 32px;font-size:.72em;color:#b0a898;line-height:1.8;border-top:1px solid #e8e4dc;margin-top:20px}
 </style>
 </head>
 <body>
+
 <div class="hd">
   <div class="brand">Zentax</div>
-  <div class="hd-title">商務英語練習 · 自選題組</div>
-  <div class="hd-sub">共 10 份題組 · 2026-06-08 · 點選下方卡片開始作答</div>
+  <div class="hd-title">多益 / 英檢 練習題庫</div>
+  <div class="hd-sub" id="sub">載入中…</div>
 </div>
+
 <div class="wrap">
-  <div class="grid"><a class="card" href="set-01.html"><div class="card-num">第 01 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 01 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-02.html"><div class="card-num">第 02 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 02 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-03.html"><div class="card-num">第 03 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 03 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-04.html"><div class="card-num">第 04 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 04 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-05.html"><div class="card-num">第 05 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 05 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-06.html"><div class="card-num">第 06 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 06 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-07.html"><div class="card-num">第 07 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 07 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-08.html"><div class="card-num">第 08 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 08 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-09.html"><div class="card-num">第 09 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 09 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a><a class="card" href="set-10.html"><div class="card-num">第 10 組</div><div class="card-title">商務英語練習 · 自選題組 · 第 10 組</div><div class="card-meta">34 題組</div><div class="card-link">開始作答 →</div></a></div>
+  <div class="loading" id="loading"><div class="spinner"></div>讀取題組清單…</div>
+  <div class="grid" id="grid" style="display:none"></div>
   <div class="footer">
     <strong style="color:#8a9ab0">ZENTAX</strong><br>
     本題組為 Zentax 原創自製練習教材，內容均為獨立創作。<br>
     與 ETS、財團法人語言訓練測驗中心（LTTC）或任何官方測驗機構無任何關聯。
   </div>
 </div>
+
+<script>
+const REPO = 'kozh1025/-zentax';
+const API  = `https://api.github.com/repos/${REPO}/contents/`;
+const BASE = `https://kozh1025.github.io/-zentax/`;
+
+async function init() {
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error(res.status);
+    const files = await res.json();
+
+    const htmlFiles = files.filter(f =>
+      f.type === 'file' &&
+      f.name.toLowerCase().endsWith('.html') &&
+      f.name.toLowerCase() !== 'index.html'
+    );
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('sub').textContent = `共 ${htmlFiles.length} 份題組 · 點選卡片開始作答`;
+
+    if (!htmlFiles.length) {
+      document.getElementById('grid').innerHTML = '<div class="empty">尚未上傳任何題組</div>';
+      document.getElementById('grid').style.display = 'block';
+      return;
+    }
+
+    const grid = document.getElementById('grid');
+    grid.style.display = 'grid';
+    grid.innerHTML = htmlFiles.map(f => {
+      const title = f.name.replace(/\.html$/i, '').replace(/-/g, ' · ');
+      return `<a class="card" href="${BASE}${f.name}">
+        <div class="card-title">${title}</div>
+        <div class="card-link">開始作答 →</div>
+      </a>`;
+    }).join('');
+
+  } catch(e) {
+    document.getElementById('loading').innerHTML =
+      `<div style="color:#c00">⚠️ 無法載入清單：${e.message}</div>`;
+  }
+}
+
+init();
+</script>
 </body>
 </html>
