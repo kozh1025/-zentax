@@ -246,7 +246,7 @@ function submitAll(){
   var sc=document.getElementById('scoreCard');
   sc.innerHTML='<div class="sc-ring"><div class="sc-num">'+correct+'</div><div class="sc-den">/ '+all.length+'</div></div>'
     +'<div class="sc-msg">'+msg+'</div><div class="sc-rate">正確率 '+pct+'%</div>'
-    +'<div class="sc-bar-wrap"><div class="sc-bar"><div class="sc-bar-fill" id="scBarFill"></div></div></div>';
+    +'<div class="sc-bar-wrap"><div class="sc-bar"><div class="sc-bar-fill" id="scBarFill"></div></div></div><div style="margin-top:22px"><a href="quiz.html" style="display:inline-block;background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:10px;padding:10px 26px;font-size:.88em;font-weight:700;text-decoration:none;letter-spacing:.02em">&#8592; &#36820;&#22238;&#21050;&#39064;&#39029;&#38754;</a></div>';
   sc.style.display='block';
   setTimeout(function(){var f=document.getElementById('scBarFill');if(f)f.style.width=pct+'%';},100);
   var btn=document.getElementById('submitBtn');
