@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隱私政策・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a3557;--blue:#2563eb;--bg:#f0f2f5;--white:#fff;--bd:#e2e8f0;--text:#1e293b;--muted:#64748b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:var(--blue);font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:var(--muted);font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover{color:var(--navy);border-bottom-color:var(--blue)}
+.nav-gap{flex:1}
+@media(max-width:640px){.nav-tag{display:none}.nav-links{display:none}}
+.wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px}
+.page-title{font-size:1.6em;font-weight:800;color:var(--navy);margin-bottom:6px}
+.page-meta{font-size:.82em;color:var(--muted);margin-bottom:40px}
+.data-table{width:100%;border-collapse:collapse;font-size:.84em;margin:14px 0 24px}
+.data-table th{background:var(--navy);color:rgba(255,255,255,.8);padding:10px 14px;text-align:left;font-weight:600;font-size:.82em}
+.data-table th:first-child{border-radius:8px 0 0 0}
+.data-table th:last-child{border-radius:0 8px 0 0}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--bd);background:var(--white);color:#334155;vertical-align:top;line-height:1.65}
+.data-table tr:last-child td:first-child{border-radius:0 0 0 8px}
+.data-table tr:last-child td:last-child{border-radius:0 0 8px 0}
+.data-table tr:last-child td{border-bottom:none}
+.doc h2{font-size:1em;font-weight:700;color:var(--navy);margin:28px 0 10px}
+.doc p,.doc li{font-size:.88em;color:#334155;line-height:1.85}
+.doc ul{padding-left:20px;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.doc section{border-bottom:1px solid var(--bd);padding-bottom:20px;margin-bottom:4px}
+.doc section:last-child{border-bottom:none}
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書</a>
+    <a class="nav-a" href="quiz.html">刷題</a>
+    <a class="nav-a" href="review.html">訂正</a>
+    <a class="nav-a" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot toeic">T</span><span class="exam-sw-name">TOEIC</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a><a class="exam-sw-item" href="../GEPT/index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
+
+<div class="wrap">
+  <div class="page-title">隱私政策</div>
+  <div class="page-meta">最後更新：2026 年 6 月 ・ 我們重視您的個人資料安全</div>
+
+  <div class="doc">
+    <section>
+      <h2>我們收集哪些資料</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>資料類型</th><th>來源</th><th>用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Google 帳號基本資訊<br>（姓名、Email、頭像）</td><td>Google OAuth 登入</td><td>帳號識別、顯示名稱</td></tr>
+          <tr><td>學習紀錄<br>（答題記錄、錯題、連續天數）</td><td>使用者答題行為</td><td>提供錯題本、進度追蹤功能</td></tr>
+          <tr><td>付費狀態</td><td>付款完成後系統寫入</td><td>驗證功能存取權限</td></tr>
+          <tr><td>目標設定</td><td>使用者設定</td><td>儲存於本機（localStorage），不上傳</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>資料儲存與安全</h2>
+      <ul>
+        <li>學習紀錄及付費狀態儲存於 Google Firebase（資料中心位於美國）</li>
+        <li>目標設定僅儲存於您的裝置本機，本平台無法讀取</li>
+        <li>我們不儲存任何信用卡或金融卡資訊，付款處理由第三方金流服務負責</li>
+        <li>所有資料傳輸均使用 HTTPS 加密</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>資料分享</h2>
+      <p>我們不會將您的個人資料出售或提供給第三方，以下情況除外：</p>
+      <ul>
+        <li>依法律規定或政府機關要求提供</li>
+        <li>使用 Google Firebase 等技術服務商處理資料（受其隱私政策約束）</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>您的權利</h2>
+      <ul>
+        <li><strong>查閱：</strong>可透過 dashboard 查看您的學習紀錄</li>
+        <li><strong>刪除：</strong>如需刪除帳號及所有資料，請聯絡我們</li>
+        <li><strong>退出：</strong>可隨時透過頁面「登出」按鈕登出帳號</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cookie 與追蹤</h2>
+      <p>本平台使用 Firebase Authentication 所需的 Session Cookie 進行登入狀態維持。本平台不使用廣告追蹤 Cookie，也不整合任何第三方廣告服務。</p>
+    </section>
+
+    <section>
+      <h2>政策修改</h2>
+      <p>本政策如有重大修改，將以站內公告方式通知。繼續使用本服務即表示您同意修改後的政策。</p>
+    </section>
+  </div>
+</div>
+
+</body>
+</html>

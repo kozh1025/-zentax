@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f2744;--gold:#c9922a;--bg:#f7f5f1;--border:#e4dfd7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#222}
+
+.nav{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:#2563eb;font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px;white-space:nowrap}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:#64748b;font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover,.nav-a.on{color:var(--navy);border-bottom-color:#2563eb}
+.nav-gap{flex:1}
+.nav-plan{background:var(--navy);color:#fff;font-size:.78em;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none;margin-right:10px;transition:opacity .15s;white-space:nowrap}
+.nav-plan:hover{opacity:.85}
+@media(max-width:640px){.nav-tag{display:none}.nav-links .nav-a:not(.on){display:none}}
+
+.page-header{background:var(--navy);padding:52px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.page-header::after{content:'方案';position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-family:'DM Serif Display',serif;font-size:5em;color:rgba(255,255,255,.04);pointer-events:none}
+.page-header-tag{display:inline-block;background:rgba(201,146,42,.2);color:var(--gold);font-size:.72em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 12px;border-radius:20px;border:1px solid rgba(201,146,42,.3);margin-bottom:14px}
+.page-header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8em,4vw,2.6em);color:#fff;margin-bottom:10px}
+.page-header p{color:rgba(255,255,255,.5);font-size:.92em;max-width:440px;margin:0 auto}
+
+.wrap{max-width:900px;margin:0 auto;padding:52px 20px 80px}
+
+/* Trust bar */
+.trust-bar{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:.82em;color:#666}
+.trust-item span{font-size:1.1em}
+
+/* Price grid */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;margin-bottom:40px}
+@media(max-width:720px){.price-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}}
+
+.price-card{border-radius:18px;padding:32px 28px;border:1.5px solid var(--border);background:#fff;position:relative}
+.price-card.featured{border-color:var(--navy);box-shadow:0 8px 40px rgba(15,39,68,.13)}
+.price-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.7em;font-weight:700;padding:4px 16px;border-radius:20px;white-space:nowrap;letter-spacing:.06em}
+.price-plan{font-size:.75em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:12px}
+.price-amount{font-family:'DM Serif Display',serif;font-size:2.8em;color:var(--navy);line-height:1;margin-bottom:4px}
+.price-amount .currency{font-size:.38em;font-family:'Inter',sans-serif;font-weight:600;color:#999;vertical-align:top;margin-top:.55em;display:inline-block}
+.price-orig{font-size:.78em;color:#bbb;text-decoration:line-through;margin-bottom:4px}
+.price-period{font-size:.8em;color:#888;margin-bottom:22px;line-height:1.5}
+.price-divider{height:1px;background:var(--border);margin-bottom:22px}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.price-features li{font-size:.855em;color:#333;padding-left:22px;position:relative;line-height:1.5}
+.price-features li::before{content:'✓';position:absolute;left:0;color:#2e7d4f;font-weight:700;font-size:.95em}
+.price-features li.off{color:#bbb}
+.price-features li.off::before{content:'–';color:#ddd}
+.price-btn{display:block;text-align:center;padding:12px;border-radius:10px;font-size:.9em;font-weight:700;text-decoration:none;transition:all .15s;cursor:pointer;border:none;font-family:'Inter',sans-serif;width:100%}
+.price-btn.outline{border:1.5px solid var(--border);color:var(--navy);background:#fff}
+.price-btn.outline:hover{border-color:var(--navy);background:#f9f7f4}
+.price-btn.fill{background:var(--navy);color:#fff}
+.price-btn.fill:hover{opacity:.88}
+.price-legal{font-size:.72em;color:#aaa;text-align:center;margin-top:8px;line-height:1.55}
+
+/* Compare table */
+.compare{margin-top:56px}
+.compare-title{font-family:'DM Serif Display',serif;font-size:1.5em;color:var(--navy);margin-bottom:24px;text-align:center}
+.compare-table{width:100%;border-collapse:collapse;font-size:.87em}
+.compare-table th{background:var(--navy);color:rgba(255,255,255,.75);padding:12px 16px;text-align:center;font-weight:600;font-size:.82em;letter-spacing:.04em}
+.compare-table th:first-child{text-align:left;border-radius:10px 0 0 0}
+.compare-table th:last-child{border-radius:0 10px 0 0}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--border);background:#fff;text-align:center;color:#555}
+.compare-table td:first-child{text-align:left;color:var(--navy);font-weight:500}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:last-child td:first-child{border-radius:0 0 0 10px}
+.compare-table tr:last-child td:last-child{border-radius:0 0 10px 0}
+.check{color:#2e7d4f;font-weight:700;font-size:1.1em}
+.cross{color:#ddd;font-size:1.1em}
+
+/* FAQ */
+.faq{margin-top:56px;max-width:640px;margin-left:auto;margin-right:auto}
+.faq-title{font-family:'DM Serif Display',serif;font-size:1.5em;color:var(--navy);margin-bottom:28px;text-align:center}
+.faq-item{border-bottom:1px solid var(--border);padding:18px 0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{font-weight:600;font-size:.9em;color:var(--navy);margin-bottom:8px}
+.faq-a{font-size:.855em;color:#666;line-height:1.75}
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書</a>
+    <a class="nav-a" href="quiz.html">刷題</a>
+    <a class="nav-a" href="review.html">訂正</a>
+    <a class="nav-a on" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+  <a class="nav-plan" href="dashboard.html">開始備考</a>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot gept">G</span><span class="exam-sw-name">GEPT</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item" href="../TOEIC/index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div></a><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
+
+<div class="page-header">
+  <div class="page-header-tag">方案價格</div>
+  <h1>選擇你的備考方案</h1>
+  <p>免費先試用，確認適合再購買。一次付款，不自動續扣。</p>
+</div>
+
+<div class="wrap">
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <div class="trust-item"><span>✓</span> 不需信用卡綁定</div>
+    <div class="trust-item"><span>✓</span> 一次付款不續扣</div>
+    <div class="trust-item"><span>✓</span> 付款後立即開通</div>
+    <div class="trust-item"><span>✓</span> 系統異常 7 日內協助</div>
+  </div>
+
+  <!-- Price cards -->
+  <div class="price-grid">
+
+    <div class="price-card">
+      <div class="price-plan">免費版</div>
+      <div class="price-amount"><span class="currency">NT$</span>0</div>
+      <div class="price-period">永久免費，無需信用卡</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>1 份完整題組試用</li>
+        <li>即時對答 &amp; 詳解</li>
+        <li class="off">全部 10+ 份題組</li>
+        <li class="off">錯題本 &amp; 複習</li>
+        <li class="off">讀書筆記</li>
+      </ul>
+      <a class="price-btn outline" href="quiz.html">免費開始</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">最多人選擇</div>
+      <div class="price-plan">備考包</div>
+      <div class="price-orig">NT$499</div>
+      <div class="price-amount"><span class="currency">NT$</span>299</div>
+      <div class="price-period">一次付款，開通 3 個月</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>全部 10+ 份題組</li>
+        <li>即時對答 &amp; 詳解</li>
+        <li>錯題本 &amp; 複習功能</li>
+        <li>讀書筆記 &amp; 考點整理</li>
+        <li>跨裝置同步</li>
+      </ul>
+      <button class="price-btn fill" id="buyBtn3m">立即購買 →</button>
+      <p class="price-legal">本商品屬數位內容，購買後即時開通，不適用七天鑑賞期，售出後恕不退換。<br>繼續購買即表示您同意本平台的 <a href="terms.html" style="color:#aaa;text-decoration:underline">服務條款</a> 與 <a href="refund.html" style="color:#aaa;text-decoration:underline">退款政策</a>。</p>
+    </div>
+
+    <div class="price-card">
+      <div class="price-plan">長期備考包</div>
+      <div class="price-amount"><span class="currency">NT$</span>499</div>
+      <div class="price-period">一次付款，開通 12 個月</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>備考包全部功能</li>
+        <li>新題組優先取得</li>
+        <li>考試年度完整涵蓋</li>
+        <li>未來更新免費升級</li>
+        <li>跨裝置同步</li>
+      </ul>
+      <button class="price-btn outline" id="buyBtn12m">立即購買 →</button>
+      <p class="price-legal">本商品屬數位內容，購買後即時開通，不適用七天鑑賞期，售出後恕不退換。<br>繼續購買即表示您同意本平台的 <a href="terms.html" style="color:#aaa;text-decoration:underline">服務條款</a> 與 <a href="refund.html" style="color:#aaa;text-decoration:underline">退款政策</a>。</p>
+    </div>
+
+  </div>
+
+  <!-- Compare table -->
+  <div class="compare">
+    <div class="compare-title">功能對比</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>功能</th>
+          <th>免費版</th>
+          <th>備考包</th>
+          <th>長期備考包</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>題組數量</td><td>1 份</td><td>10+ 份</td><td>10+ 份</td></tr>
+        <tr><td>即時對答 &amp; 詳解</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>中英對照解析</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>錯題本 &amp; 複習</td><td class="cross">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>讀書筆記</td><td class="cross">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>跨裝置同步</td><td class="cross">–</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>新題組優先取得</td><td class="cross">–</td><td class="cross">–</td><td class="check">✓</td></tr>
+        <tr><td>開通時間</td><td>永久</td><td>3 個月</td><td>12 個月</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="faq-title">常見問題</div>
+    <div class="faq-item">
+      <div class="faq-q">付款後多久可以使用？</div>
+      <div class="faq-a">付款成功後立即自動開通，不需等待人工審核。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">會自動扣款嗎？</div>
+      <div class="faq-a">不會。所有方案均為一次性付款，到期後不會自動續費，也不需要綁定信用卡。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">可以退款嗎？</div>
+      <div class="faq-a">本服務為數位內容，付款後立即開通使用，依消費者保護法不適用 7 日鑑賞期。若遇系統異常導致無法使用，請於 7 日內聯繫客服，我們將協助處理。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">可以使用哪些付款方式？</div>
+      <div class="faq-a">支援 ATM 轉帳、信用卡（Visa / Mastercard）、超商繳款（7-11 / 全家）。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">題目跟官方考試一樣嗎？</div>
+      <div class="faq-a">本平台題組為 Zentax 獨立創作的練習教材，與 ETS、LTTC 或任何官方測驗機構無任何關聯，為備考練習用途。</div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+// 之後換成藍新金流或其他付款連結
+const PAY_3M  = '#';  // ← 換成 3 個月方案付款連結
+const PAY_12M = '#';  // ← 換成 12 個月方案付款連結
+
+document.getElementById('buyBtn3m').onclick  = () => { if(PAY_3M  !== '#') location.href = PAY_3M;  else alert('付款功能即將開放！'); };
+document.getElementById('buyBtn12m').onclick = () => { if(PAY_12M !== '#') location.href = PAY_12M; else alert('付款功能即將開放！'); };
+</script>
+</body>
+</html>

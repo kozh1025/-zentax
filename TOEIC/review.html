@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>訂正・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a3557;--blue:#2563eb;--blue-lt:#eff6ff;--gold:#c9922a;--bg:#f0f2f5;--white:#fff;--bd:#e2e8f0;--text:#1e293b;--muted:#64748b;--green:#16a34a;--red:#dc2626;--amber:#d97706}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:var(--blue);font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px;white-space:nowrap}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:var(--muted);font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover,.nav-a.on{color:var(--navy);border-bottom-color:var(--blue)}
+.nav-gap{flex:1}
+.nav-plan{background:var(--navy);color:#fff;font-size:.78em;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none;margin-right:10px;transition:opacity .15s;white-space:nowrap}
+.nav-plan:hover{opacity:.85}
+@media(max-width:640px){.nav-tag{display:none}.nav-links .nav-a:not(.on){display:none}}
+
+.page-header{background:var(--white);border-bottom:1px solid var(--bd);padding:18px 20px 16px}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-header h1{font-size:1.25em;font-weight:800;color:var(--text);margin-bottom:2px}
+.page-header p{font-size:.81em;color:var(--muted)}
+
+.wrap{max-width:900px;margin:0 auto;padding:22px 20px 64px}
+
+.stat-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:580px){.stat-bar{grid-template-columns:repeat(2,1fr)}}
+.sbox{background:var(--white);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;border-top:3px solid transparent}
+.sbox.total{border-top-color:#94a3b8}
+.sbox.wrong{border-top-color:var(--red)}
+.sbox.correct{border-top-color:var(--green)}
+.sbox.starred{border-top-color:var(--amber)}
+.sbox-num{font-size:1.65em;font-weight:800;color:var(--text);line-height:1;margin-bottom:3px}
+.sbox-lbl{font-size:.72em;font-weight:700;color:var(--muted);letter-spacing:.02em}
+.sbox.wrong .sbox-num{color:var(--red)}
+.sbox.correct .sbox-num{color:var(--green)}
+.sbox.starred .sbox-num{color:var(--amber)}
+
+.filter-bar{background:var(--white);border:1px solid var(--bd);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filter-lbl{font-size:.8em;font-weight:700;color:var(--muted);flex-shrink:0}
+.filter-sep{width:1px;height:14px;background:var(--bd);flex-shrink:0;margin:0 2px}
+.filter-btn{font-size:.78em;font-weight:600;padding:4px 10px;border-radius:6px;border:1.5px solid var(--bd);background:#fff;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--navy);color:var(--navy)}
+.filter-btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.filter-clear{margin-left:auto;font-size:.78em;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;padding:2px 6px;border-radius:4px}
+.filter-clear:hover{background:#fee2e2}
+
+.wrong-list{display:flex;flex-direction:column;gap:8px}
+.witem{background:var(--white);border:1px solid var(--bd);border-radius:10px;padding:13px 18px;display:flex;align-items:center;gap:12px;transition:box-shadow .15s}
+.witem:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.witem-left{flex:1;min-width:0}
+.witem-set{font-size:.69em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.witem-q{font-size:.87em;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.witem-meta{display:flex;align-items:center;gap:7px}
+.witem-date{font-size:.69em;color:#bbb}
+.witem-badge{font-size:.66em;font-weight:700;padding:1px 6px;border-radius:4px}
+.badge-wrong{background:#fee2e2;color:var(--red)}
+.badge-correct{background:#dcfce7;color:var(--green)}
+.badge-streak{background:#fef3c7;color:var(--amber)}
+.witem-star{flex-shrink:0;background:none;border:1px solid var(--bd);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.88em;color:#bbb;transition:all .15s}
+.witem-star:hover,.witem-star.on{color:var(--amber);border-color:var(--amber);background:#fef3c7}
+.witem-btn{flex-shrink:0;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:.78em;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s;text-decoration:none;white-space:nowrap}
+.witem-btn:hover{opacity:.85}
+
+.empty-state{text-align:center;padding:56px 20px}
+.empty-icon{font-size:2.8em;margin-bottom:16px}
+.empty-t{font-size:1.1em;font-weight:800;color:var(--navy);margin-bottom:8px}
+.empty-s{font-size:.85em;color:var(--muted);margin-bottom:22px;line-height:1.7;max-width:360px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;background:var(--navy);color:#fff;font-weight:700;font-size:.88em;padding:10px 22px;border-radius:10px;text-decoration:none;transition:opacity .15s}
+.cta-btn:hover{opacity:.85}
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書</a>
+    <a class="nav-a" href="quiz.html">刷題</a>
+    <a class="nav-a on" href="review.html">訂正</a>
+    <a class="nav-a" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+  <a class="nav-plan" href="pricing.html">查看方案</a>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot toeic">T</span><span class="exam-sw-name">TOEIC</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a><a class="exam-sw-item" href="../GEPT/index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>錯題本</h1>
+    <p>優先複習仍未訂正與連錯題，追蹤每題最近作答紀錄</p>
+  </div>
+</div>
+
+<div class="wrap" id="mainWrap"></div>
+
+<script>
+var BASE = 'https://kozh1025.github.io/-zentax/TOEIC/';
+var KEY = 'zentax_wrong';
+
+function getData() {
+  try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function saveData(d) {
+  try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {}
+}
+
+var currentFilter = 'wrong'; // 'all' | 'wrong' | 'starred'
+
+function render() {
+  var data = getData();
+  var entries = Object.values(data);
+
+  // Stats
+  var totalCount   = entries.length;
+  var wrongCount   = entries.filter(function(e){ return e.lastResult === 'wrong'; }).length;
+  var correctCount = entries.filter(function(e){ return e.lastResult === 'correct'; }).length;
+  var starCount    = entries.filter(function(e){ return e.starred; }).length;
+
+  // Filter
+  var filtered = entries.filter(function(e) {
+    if (currentFilter === 'wrong')   return e.lastResult === 'wrong';
+    if (currentFilter === 'starred') return e.starred;
+    return true;
+  });
+
+  // Sort: most recently wrong first
+  filtered.sort(function(a, b) {
+    if (a.lastDate < b.lastDate) return 1;
+    if (a.lastDate > b.lastDate) return -1;
+    return 0;
+  });
+
+  var html = '';
+
+  // Stat bar
+  html += '<div class="stat-bar">';
+  html += '<div class="sbox total"><div class="sbox-num">'+totalCount+'</div><div class="sbox-lbl">總記錄</div></div>';
+  html += '<div class="sbox wrong"><div class="sbox-num">'+wrongCount+'</div><div class="sbox-lbl">未訂正</div></div>';
+  html += '<div class="sbox correct"><div class="sbox-num">'+correctCount+'</div><div class="sbox-lbl">已訂正</div></div>';
+  html += '<div class="sbox starred"><div class="sbox-num">'+starCount+'</div><div class="sbox-lbl">已加星</div></div>';
+  html += '</div>';
+
+  // Filter bar
+  html += '<div class="filter-bar">';
+  html += '<span class="filter-lbl">篩選</span>';
+  html += '<span class="filter-sep"></span>';
+  html += '<button class="filter-btn'+(currentFilter==='wrong'?' on':'')+'" onclick="setFilter(\'wrong\')">未訂正</button>';
+  html += '<button class="filter-btn'+(currentFilter==='starred'?' on':'')+'" onclick="setFilter(\'starred\')">已加星</button>';
+  html += '<button class="filter-btn'+(currentFilter==='all'?' on':'')+'" onclick="setFilter(\'all\')">全部</button>';
+  if (totalCount > 0) {
+    html += '<button class="filter-clear" onclick="clearAll()">清除全部紀錄</button>';
+  }
+  html += '</div>';
+
+  if (entries.length === 0) {
+    html += '<div class="empty-state">'
+      + '<div class="empty-icon">🔁</div>'
+      + '<div class="empty-t">錯題本是空的</div>'
+      + '<div class="empty-s">完成題組後，答錯的題目會自動記錄在這裡，方便你針對弱點反覆複習。</div>'
+      + '<a class="cta-btn" href="quiz.html">去刷題 →</a>'
+      + '</div>';
+  } else if (filtered.length === 0) {
+    html += '<div class="empty-state">'
+      + '<div class="empty-icon">✅</div>'
+      + '<div class="empty-t">這個分類沒有題目</div>'
+      + '<div class="empty-s">切換上方篩選查看其他紀錄。</div>'
+      + '</div>';
+  } else {
+    html += '<div class="wrong-list">';
+    filtered.forEach(function(e) {
+      var isWrong = e.lastResult === 'wrong';
+      var badgeHtml = isWrong
+        ? '<span class="witem-badge badge-wrong">✕ 最近答錯</span>'
+        : '<span class="witem-badge badge-correct">✓ 最近答對</span>';
+      if (e.wrongCount >= 3) {
+        badgeHtml += '<span class="witem-badge badge-streak" style="margin-left:4px">連錯 '+e.wrongCount+' 次</span>';
+      }
+      var setNum = e.setName || '未知題組';
+      // Extract set number to build link
+      var setLink = BASE + 'set-01.html';
+      var sm = setNum.match(/(\d+)/);
+      if (sm) setLink = BASE + 'set-' + sm[1].padStart(2,'0') + '.html';
+
+      html += '<div class="witem">'
+        + '<div class="witem-left">'
+        + '<div class="witem-set">'+setNum+'</div>'
+        + '<div class="witem-q">'+(e.question || e.qid)+'</div>'
+        + '<div class="witem-meta">'+badgeHtml+'<span class="witem-date">'+e.lastDate+'</span></div>'
+        + '</div>'
+        + '<button class="witem-star'+(e.starred?' on':'')+'" onclick="toggleStar(\''+e.qid+'\')" title="加星標記">★</button>'
+        + '<a class="witem-btn" href="'+setLink+'" target="_blank">複習 →</a>'
+        + '</div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('mainWrap').innerHTML = html;
+}
+
+window.setFilter = function(f) {
+  currentFilter = f;
+  render();
+};
+
+window.toggleStar = function(qid) {
+  var data = getData();
+  if (data[qid]) {
+    data[qid].starred = !data[qid].starred;
+    saveData(data);
+    render();
+  }
+};
+
+window.clearAll = function() {
+  if (confirm('確定要清除全部錯題紀錄嗎？此操作無法復原。')) {
+    localStorage.removeItem(KEY);
+    render();
+  }
+};
+
+render();
+</script>
+</body>
+</html>

@@ -148,7 +148,25 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .loading{text-align:center;padding:80px 20px;color:var(--muted)}
 .spinner{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-</style>
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
 </head>
 <body>
 
@@ -173,7 +191,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
   <div class="nav-gap"></div>
   <a class="nav-plan" href="pricing.html">查看方案</a>
-</nav>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot toeic">T</span><span class="exam-sw-name">TOEIC</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a><a class="exam-sw-item" href="../GEPT/index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
 
 <!-- Banner -->
 <div class="banner" id="banner">
@@ -273,7 +291,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <script>
-const BASE = 'https://kozh1025.github.io/-zentax/';
+const BASE = 'https://kozh1025.github.io/-zentax/TOEIC/';
 
 function getGoals() {
   try { return JSON.parse(localStorage.getItem('zentax_goals')) || {}; } catch { return {}; }

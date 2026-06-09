@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>服務條款・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a3557;--blue:#2563eb;--bg:#f0f2f5;--white:#fff;--bd:#e2e8f0;--text:#1e293b;--muted:#64748b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:var(--blue);font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:var(--muted);font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover{color:var(--navy);border-bottom-color:var(--blue)}
+.nav-gap{flex:1}
+@media(max-width:640px){.nav-tag{display:none}.nav-links{display:none}}
+.wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px}
+.page-title{font-size:1.6em;font-weight:800;color:var(--navy);margin-bottom:6px}
+.page-meta{font-size:.82em;color:var(--muted);margin-bottom:40px}
+.doc h2{font-size:1em;font-weight:700;color:var(--navy);margin:28px 0 10px}
+.doc p,.doc li{font-size:.88em;color:#334155;line-height:1.85}
+.doc ul{padding-left:20px;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.doc section{border-bottom:1px solid var(--bd);padding-bottom:20px;margin-bottom:4px}
+.doc section:last-child{border-bottom:none}
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書</a>
+    <a class="nav-a" href="quiz.html">刷題</a>
+    <a class="nav-a" href="review.html">訂正</a>
+    <a class="nav-a" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot gept">G</span><span class="exam-sw-name">GEPT</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item" href="../TOEIC/index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div></a><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
+
+<div class="wrap">
+  <div class="page-title">服務條款</div>
+  <div class="page-meta">最後更新：2026 年 6 月 ・ 使用本服務即表示您同意以下條款</div>
+
+  <div class="doc">
+    <section>
+      <h2>一、服務說明</h2>
+      <p>Zentax（以下稱「本平台」）提供多益（TOEIC）備考題庫、錯題本及學習工具等數位服務。本平台為個人經營之學習輔助工具，非官方授權之考試機構。</p>
+    </section>
+
+    <section>
+      <h2>二、帳號與登入</h2>
+      <p>本平台透過 Google 帳號進行身份驗證。您需持有有效的 Google 帳號方可使用付費功能。您應妥善保管帳號安全，不得將帳號轉讓或共用。</p>
+    </section>
+
+    <section>
+      <h2>三、付費方案</h2>
+      <ul>
+        <li>本平台採一次性付款制，不自動續費。</li>
+        <li>付款完成後，系統將自動開通對應期限的功能存取權限。</li>
+        <li>方案期限屆滿後，付費功能將自動停用，免費功能仍可繼續使用。</li>
+        <li>價格以付款當下頁面顯示為準，本平台保留調整定價之權利。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>四、退款政策</h2>
+      <p>詳見本平台<a href="refund.html" style="color:var(--blue)">退款政策頁面</a>。一般情況下，數位內容一經開通即不提供退款，但遇系統異常等特殊情形，請於 7 日內聯絡客服處理。</p>
+    </section>
+
+    <section>
+      <h2>五、智慧財產權</h2>
+      <p>本平台所有題目內容、解析說明及介面設計均受著作權保護。使用者不得以任何形式複製、散布或商業利用本平台內容。</p>
+    </section>
+
+    <section>
+      <h2>六、免責聲明</h2>
+      <p>本平台盡力維持服務穩定，但不對服務中斷、資料遺失或考試成績保證負責。題目內容僅供備考練習，不代表實際考試內容。</p>
+    </section>
+
+    <section>
+      <h2>七、條款修改</h2>
+      <p>本平台保留隨時修改本條款之權利。重大修改將以站內公告方式通知。繼續使用本服務即視為接受修改後之條款。</p>
+    </section>
+
+    <section>
+      <h2>八、聯絡方式</h2>
+      <p>如有任何疑問，請透過頁面底部的聯絡方式與我們聯繫。</p>
+    </section>
+
+    <section>
+      <h2>九、商店負責人資訊</h2>
+      <ul>
+        <li><strong>負責人姓名：</strong>（請填入媽媽姓名）</li>
+        <li><strong>統一編號：</strong>（稅籍登記前免填，登記後補入）</li>
+        <li><strong>聯絡信箱：</strong>hdrryt66789954@gmail.com</li>
+        <li><strong>客服回覆時間：</strong>週一至週五 10:00–18:00，節假日除外</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+</body>
+</html>

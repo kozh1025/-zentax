@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>退款政策・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a3557;--blue:#2563eb;--bg:#f0f2f5;--white:#fff;--bd:#e2e8f0;--text:#1e293b;--muted:#64748b;--green:#16a34a;--red:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:var(--blue);font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:var(--muted);font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover{color:var(--navy);border-bottom-color:var(--blue)}
+.nav-gap{flex:1}
+@media(max-width:640px){.nav-tag{display:none}.nav-links{display:none}}
+.wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px}
+.page-title{font-size:1.6em;font-weight:800;color:var(--navy);margin-bottom:6px}
+.page-meta{font-size:.82em;color:var(--muted);margin-bottom:40px}
+.policy-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px}
+@media(max-width:600px){.policy-grid{grid-template-columns:1fr}}
+.policy-box{border-radius:12px;padding:18px 20px;border:1.5px solid}
+.policy-box.yes{border-color:#bbf7d0;background:#f0fdf4}
+.policy-box.no{border-color:#fecaca;background:#fff5f5}
+.policy-box-t{font-size:.82em;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.policy-box.yes .policy-box-t{color:var(--green)}
+.policy-box.no .policy-box-t{color:var(--red)}
+.policy-box li{font-size:.82em;line-height:1.75;color:#334155;padding-left:14px;position:relative}
+.policy-box li::before{content:'·';position:absolute;left:0}
+.policy-box ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.doc h2{font-size:1em;font-weight:700;color:var(--navy);margin:28px 0 10px}
+.doc p,.doc li{font-size:.88em;color:#334155;line-height:1.85}
+.doc ul{padding-left:20px;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.doc section{border-bottom:1px solid var(--bd);padding-bottom:20px;margin-bottom:4px}
+.doc section:last-child{border-bottom:none}
+.contact-box{background:var(--white);border:1px solid var(--bd);border-radius:12px;padding:20px 22px;margin-top:32px}
+.contact-box-t{font-size:.88em;font-weight:700;color:var(--navy);margin-bottom:6px}
+.contact-box p{font-size:.84em;color:var(--muted);line-height:1.75}
+
+/* ── Exam Switcher ─── */
+.exam-sw{position:relative;margin-left:8px}
+.exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
+.exam-sw-btn:hover{border-color:var(--navy);background:#fff}
+.exam-sw-dot{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:.68em;font-weight:800;color:#fff;flex-shrink:0}
+.exam-sw-dot.toeic{background:#1a3557}
+.exam-sw-dot.gept{background:#15803d}
+.exam-sw-name{white-space:nowrap}
+.exam-sw-chevron{width:10px;height:10px;opacity:.5;flex-shrink:0}
+.exam-sw-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.13);min-width:230px;z-index:500;padding:6px}
+.exam-sw-menu.open{display:block}
+.exam-sw-hd{font-size:.69em;font-weight:700;color:var(--muted);padding:6px 10px 4px;letter-spacing:.06em;text-transform:uppercase}
+.exam-sw-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--text);transition:background .12s}
+.exam-sw-item:hover{background:#f8fafc}
+.exam-sw-item.on{background:#eff6ff}
+.exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
+.exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書</a>
+    <a class="nav-a" href="quiz.html">刷題</a>
+    <a class="nav-a" href="review.html">訂正</a>
+    <a class="nav-a" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+<div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot gept">G</span><span class="exam-sw-name">GEPT</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item" href="../TOEIC/index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div></a><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
+
+<div class="wrap">
+  <div class="page-title">退款政策</div>
+  <div class="page-meta">最後更新：2026 年 6 月 ・ 如有疑問請於 7 日內聯繫</div>
+
+  <div class="policy-grid">
+    <div class="policy-box yes">
+      <div class="policy-box-t">✓ 可申請退款</div>
+      <ul>
+        <li>付款後系統未正常開通功能</li>
+        <li>重複付款（同一方案扣款兩次）</li>
+        <li>技術問題導致完全無法使用</li>
+        <li>付款後 24 小時內且尚未使用任何付費功能</li>
+      </ul>
+    </div>
+    <div class="policy-box no">
+      <div class="policy-box-t">✕ 不予退款</div>
+      <ul>
+        <li>已正常使用付費功能後要求退款</li>
+        <li>忘記取消或不想繼續使用</li>
+        <li>對題目內容不滿意</li>
+        <li>付款超過 7 日</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc">
+    <section>
+      <h2>退款流程</h2>
+      <ul>
+        <li>請於付款後 7 日內透過下方聯絡方式提出申請</li>
+        <li>請提供付款截圖或交易序號，以利核對</li>
+        <li>退款通過後將原路退回，處理時間約 5–10 個工作日</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>關於數位內容</h2>
+      <p>依消費者保護法第 19 條，線上數位內容服務於開通後不適用 7 日猶豫期。本平台提供免費試用題組，建議先試用後再購買付費方案。</p>
+    </section>
+
+    <section>
+      <h2>特殊情形</h2>
+      <p>如遇本平台停止營運或大規模服務異常，將另行公告退款方式，不受上述條款限制。</p>
+    </section>
+  </div>
+
+  <div class="contact-box">
+    <div class="contact-box-t">申請退款或有其他問題？</div>
+    <p>請以 Email 聯絡，並於信件中說明付款日期與交易編號。<br>
+    我們會在 1–2 個工作日內回覆。</p>
+  </div>
+</div>
+
+</body>
+</html>
