@@ -1,78 +1,72 @@
-import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import {
-  getFirestore, doc, getDoc, setDoc, updateDoc, increment, serverTimestamp
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+/* Zentax Wrong Answer Tracker — localStorage version */
+(function () {
+  var KEY = 'zentax_wrong';
 
-const FIREBASE_CONFIG = {
-  apiKey:            'AIzaSyCc2K_lRhugslJUx3tq3ziNa42Y10Smq5Y',
-  authDomain:        'kozh-5f47a.firebaseapp.com',
-  projectId:         'kozh-5f47a',
-  storageBucket:     'kozh-5f47a.appspot.com',
-  messagingSenderId: '',
-  appId:             ''
-};
+  var T = window.ZTracker = {
+    getAll: function () {
+      try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; }
+    },
+    _save: function (data) {
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+    },
+    record: function (qid, setName, questionText, isCorrect) {
+      var data = this.getAll();
+      if (!data[qid]) {
+        data[qid] = { qid: qid, setName: setName, question: questionText, wrongCount: 0, correctCount: 0, starred: false, lastResult: '', lastDate: '' };
+      }
+      var e = data[qid];
+      e.setName = setName;
+      if (questionText && questionText !== qid) e.question = questionText;
+      e.lastDate = new Date().toISOString().slice(0, 10);
+      e.lastResult = isCorrect ? 'correct' : 'wrong';
+      if (isCorrect) { e.correctCount = (e.correctCount || 0) + 1; }
+      else           { e.wrongCount   = (e.wrongCount   || 0) + 1; }
+      this._save(data);
+    },
+    toggleStar: function (qid) {
+      var data = this.getAll();
+      if (data[qid]) {
+        data[qid].starred = !data[qid].starred;
+        this._save(data);
+        return data[qid].starred;
+      }
+      return false;
+    }
+  };
 
-const app = getApps().length ? getApps()[0] : initializeApp(FIREBASE_CONFIG);
-const auth = getAuth(app);
-const db   = getFirestore(app);
+  /* Auto-hook: override submitAll after the page script defines it */
+  window.addEventListener('DOMContentLoaded', function () {
+    var _orig = window.submitAll;
+    if (typeof _orig !== 'function') return;
 
-let currentUid = null;
-onAuthStateChanged(auth, u => { currentUid = u ? u.uid : null; });
+    window.submitAll = function () {
+      _orig.apply(this, arguments);
+      _hookRecord();
+    };
+  });
 
-/**
- * Call when the user answers a question incorrectly.
- *
- * @param {string} qid           - Unique question ID, e.g. "set03-q07"
- * @param {string} set           - Set name, e.g. "set03"
- * @param {string} questionText  - The question body text
- * @param {string} userAnswer    - The label the user chose, e.g. "B"
- * @param {string} correctAnswer - The correct label, e.g. "D"
- */
-export async function recordWrong(qid, set, questionText, userAnswer, correctAnswer) {
-  if (!currentUid) return;
+  function _hookRecord() {
+    if (typeof allQids !== 'function' || typeof getAns !== 'function' || typeof userAns === 'undefined') return;
 
-  const ref = doc(db, 'wrong_answers', currentUid, 'items', qid);
-  const snap = await getDoc(ref);
+    var titleEl = document.querySelector('.hd-title');
+    var setName = titleEl ? titleEl.textContent.trim() : 'Unknown';
+    var m = setName.match(/第\s*(\d+)\s*組/);
+    if (m) setName = 'SET-' + m[1].padStart(2, '0');
 
-  if (snap.exists()) {
-    await updateDoc(ref, {
-      wrongCount:  increment(1),
-      userAnswer,
-      timestamp:   serverTimestamp(),
-      mastered:    false
-    });
-  } else {
-    await setDoc(ref, {
-      qid,
-      set,
-      question:      questionText,
-      userAnswer,
-      correctAnswer,
-      wrongCount:    1,
-      timestamp:     serverTimestamp(),
-      mastered:      false,
-      starred:       false,
-      lastReview:    null
+    allQids().forEach(function (qid) {
+      var ans = getAns(qid);
+      var ua  = userAns[qid];
+      if (ua === undefined) return;
+
+      var qtText = qid;
+      var dotEl  = document.getElementById('dot_' + qid);
+      if (dotEl) {
+        var card = dotEl.closest('.qc');
+        var qeEl = card && card.querySelector('.qe');
+        if (qeEl) qtText = qeEl.textContent.replace(/\s+/g, ' ').trim().slice(0, 120);
+      }
+
+      T.record(qid, setName, qtText, ua === ans);
     });
   }
-}
-
-/**
- * Call when the user answers a question correctly (optional — marks as mastered
- * only if they've gotten it wrong before).
- *
- * @param {string} qid
- */
-export async function recordCorrect(qid) {
-  if (!currentUid) return;
-
-  const ref = doc(db, 'wrong_answers', currentUid, 'items', qid);
-  const snap = await getDoc(ref);
-  if (!snap.exists()) return;
-
-  await updateDoc(ref, {
-    mastered:   true,
-    lastReview: serverTimestamp()
-  });
-}
+})();
