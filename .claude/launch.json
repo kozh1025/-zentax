@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "zentax",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "F:/CLAUDE/zentax-new"],
+      "port": 4321,
+      "autoPort": true
+    }
+  ]
+}

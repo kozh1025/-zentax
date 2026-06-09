@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>開始備考・Zentax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a3557;--blue:#2563eb;--blue-lt:#eff6ff;--gold:#c9922a;--bg:#f0f2f5;--white:#fff;--bd:#e2e8f0;--text:#1e293b;--muted:#64748b;--streak:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── Nav (白底，所有頁面共用) ─── */
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;height:52px}
+.nav-brand{display:flex;align-items:center;gap:7px;text-decoration:none;margin-right:6px}
+.nav-icon{width:28px;height:28px;background:var(--navy);border-radius:7px;color:#fff;font-weight:800;font-size:.82em;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-name{font-weight:800;font-size:.97em;color:var(--navy)}.nav-brand-text{display:flex;flex-direction:column;gap:1px}.nav-tagline{font-size:.58em;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;line-height:1;white-space:nowrap}
+.nav-tag{background:#dbeafe;color:var(--blue);font-size:.68em;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:12px;white-space:nowrap}
+.nav-links{display:flex;align-items:center}
+.nav-a{color:var(--muted);font-size:.84em;font-weight:500;padding:0 11px;height:52px;display:flex;align-items:center;gap:3px;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-a:hover,.nav-a.on{color:var(--navy);border-bottom-color:var(--blue)}
+.nav-a svg{width:11px;height:11px;opacity:.45;flex-shrink:0}
+.nav-gap{flex:1}
+.nav-plan{background:var(--navy);color:#fff;font-size:.78em;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none;margin-right:10px;transition:opacity .15s;white-space:nowrap}
+.nav-plan:hover{opacity:.85}
+.nav-user{display:flex;align-items:center;gap:6px}
+.nav-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--bd)}
+.nav-initial{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:.78em;font-weight:700;display:flex;align-items:center;justify-content:center}
+.nav-logout{font-size:.72em;color:var(--muted);background:none;border:1px solid var(--bd);border-radius:8px;padding:3px 9px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.nav-logout:hover{color:var(--navy);border-color:var(--navy)}
+
+/* ── Banner ─── */
+.banner{background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:.81em;color:#1e40af;position:relative}
+.banner strong{font-weight:700}
+.banner-cta{background:var(--blue);color:#fff;font-size:.82em;font-weight:700;padding:3px 11px;border-radius:6px;text-decoration:none;flex-shrink:0}
+.banner-x{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:#93c5fd;cursor:pointer;font-size:1em;line-height:1;padding:4px}
+.banner-x:hover{color:#1e40af}
+
+/* ── Main ─── */
+.main{max-width:1060px;margin:0 auto;padding:28px 20px 64px}
+
+/* Countdown */
+.cd-label{font-size:.8em;color:var(--muted);margin-bottom:3px}
+.cd-row{margin-bottom:20px;line-height:1}
+.cd-num{font-size:2.8em;font-weight:800;color:var(--text)}
+.cd-unit{font-size:1em;font-weight:500;color:var(--muted);margin-left:4px}
+.cd-sub{font-size:.8em;color:var(--muted);margin-left:8px}
+
+/* Streak */
+.streak{background:var(--white);border:1px solid var(--bd);border-radius:12px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.streak-l{display:flex;align-items:center;gap:12px}
+.streak-fire{font-size:1.35em}
+.streak-t{font-weight:700;font-size:.88em}
+.streak-s{font-size:.76em;color:var(--muted);margin-top:2px}
+.streak-btns{display:flex;gap:8px;flex-shrink:0}
+.btn-fill{background:var(--navy);color:#fff;font-size:.8em;font-weight:700;padding:7px 14px;border-radius:8px;text-decoration:none;transition:opacity .15s;border:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-fill:hover{opacity:.88}
+.btn-outline{border:1.5px solid var(--bd);background:#fff;color:var(--navy);font-size:.8em;font-weight:700;padding:7px 14px;border-radius:8px;text-decoration:none;transition:all .15s;white-space:nowrap}
+.btn-outline:hover{border-color:var(--navy)}
+
+/* Grid */
+.grid-2{display:grid;grid-template-columns:1fr 270px;gap:16px;align-items:start}
+@media(max-width:760px){.grid-2{grid-template-columns:1fr}}
+
+/* Progress card */
+.pcard{background:var(--white);border:1px solid var(--bd);border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.pcard-meta{font-size:.76em;color:var(--muted);margin-bottom:6px}
+.pcard-pct{font-size:1.9em;font-weight:800;color:var(--text);margin-bottom:3px}
+.pcard-desc{font-size:.81em;color:var(--muted);margin-bottom:16px}
+.pbar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pbar-count{font-size:.78em;color:var(--muted);white-space:nowrap}
+.pbar{flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.pbar-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s}
+.goal-btn{font-size:.74em;color:var(--blue);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:3px;white-space:nowrap;padding:0}
+.goal-btn:hover{text-decoration:underline}
+.cont-btn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-weight:700;font-size:.88em;padding:11px 20px;border-radius:10px;text-decoration:none;transition:opacity .15s;margin-top:18px}
+.cont-btn:hover{opacity:.88}
+.cont-btn svg{width:15px;height:15px}
+
+/* Steps */
+.steps-label{font-size:.76em;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.steps-label span{background:#e2e8f0;color:var(--muted);font-size:.74em;font-weight:700;padding:1px 7px;border-radius:4px}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:500px){.steps-row{grid-template-columns:1fr}}
+.step{border:1.5px solid var(--bd);border-radius:10px;padding:13px;cursor:pointer;transition:all .15s}
+.step:hover,.step.on{border-color:var(--blue);background:var(--blue-lt)}
+.step.on{border-left:3px solid var(--blue)}
+.step-n{font-size:.68em;font-weight:700;color:var(--muted);margin-bottom:3px}
+.step-t{font-size:.86em;font-weight:700;color:var(--text);margin-bottom:2px}
+.step-d{font-size:.73em;color:var(--muted);margin-bottom:6px;line-height:1.5}
+.step-p{font-size:.71em;color:var(--muted)}
+
+/* Stat cards */
+.stat-stack{display:flex;flex-direction:column;gap:10px}
+.scard{background:var(--white);border:1px solid var(--bd);border-radius:11px;padding:15px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.scard-t{font-size:.76em;color:var(--muted);margin-bottom:7px;font-weight:500}
+.scard-n{font-size:1.25em;font-weight:700;color:var(--text);margin-bottom:7px}
+.sbar{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.sbar-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s}
+
+/* Upsell */
+.upsell{background:#fffbeb;border:1.5px solid #fde68a;border-radius:11px;padding:15px 16px}
+.upsell-t{font-size:.76em;font-weight:700;color:#b45309;margin-bottom:6px}
+.upsell-d{font-size:.8em;color:#92400e;line-height:1.6;margin-bottom:10px}
+.upsell-btn{display:block;text-align:center;background:#b45309;color:#fff;font-size:.8em;font-weight:700;padding:7px;border-radius:7px;text-decoration:none}
+
+/* Auth / overlay */
+.auth-wrap{max-width:440px;margin:40px auto}
+.auth-card{background:var(--white);border-radius:16px;padding:44px 30px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--bd)}
+.auth-icon{font-size:2em;margin-bottom:12px}
+.auth-t{font-size:1.25em;font-weight:800;color:var(--navy);margin-bottom:7px}
+.auth-s{font-size:.85em;color:var(--muted);margin-bottom:26px;line-height:1.65}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:11px 18px;border-radius:10px;border:1.5px solid var(--bd);background:#fff;font-size:.9em;font-weight:600;cursor:pointer;transition:all .15s;color:#333;font-family:'Inter',sans-serif}
+.google-btn:hover{border-color:var(--navy)}
+.google-btn svg{width:18px;height:18px;flex-shrink:0}
+
+/* ── Goal Modal ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;display:none;align-items:flex-start;justify-content:flex-end}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);width:460px;max-width:100vw;height:100vh;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+@media(max-width:500px){.modal{width:100vw}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between}
+.modal-head-l{display:flex;flex-direction:column;gap:4px}
+.modal-tag2{font-size:.72em;color:var(--blue);font-weight:700;letter-spacing:.04em}
+.modal-title{font-size:1.3em;font-weight:800;color:var(--text)}
+.modal-x{background:none;border:1px solid var(--bd);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:1em;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.modal-x:hover{border-color:var(--navy);color:var(--navy)}
+.modal-section{display:flex;flex-direction:column;gap:10px}
+.modal-section h3{font-size:.82em;font-weight:700;color:var(--text)}
+.opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{border:1.5px solid var(--bd);border-radius:10px;padding:11px 13px;cursor:pointer;transition:all .15s;background:#fff}
+.opt:hover{border-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-lt)}
+.opt-main{font-size:.88em;font-weight:700;color:var(--text)}
+.opt-sub{font-size:.74em;color:var(--muted);margin-top:2px}
+.modal-divider{height:1px;background:var(--bd)}
+.modal-note{font-size:.76em;color:var(--blue)}
+.modal-save{background:var(--blue);color:#fff;font-weight:700;font-size:.92em;padding:13px;border-radius:10px;border:none;cursor:pointer;font-family:'Inter',sans-serif;width:100%;transition:opacity .15s;margin-top:auto}
+.modal-save:hover{opacity:.88}
+.custom-date-row{display:none;gap:8px;align-items:center;margin-top:4px}
+.custom-date-row.show{display:flex}
+.custom-date-row input{flex:1;border:1.5px solid var(--bd);border-radius:8px;padding:8px 10px;font-size:.85em;font-family:'Inter',sans-serif;color:var(--text)}
+.custom-date-row input:focus{outline:none;border-color:var(--blue)}
+
+/* Loading */
+.loading{text-align:center;padding:80px 20px;color:var(--muted)}
+.spinner{width:26px;height:26px;border:3px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">Z</div>
+    <div class="nav-brand-text"><span class="nav-name">Zentax</span><span class="nav-tagline">Practice · Master · Pass</span></div>
+  </a>
+  <span class="nav-tag">多益</span>
+  <div class="nav-links">
+    <a class="nav-a on" href="dashboard.html">開始備考</a>
+    <a class="nav-a" href="reading.html">讀書
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+    </a>
+    <a class="nav-a" href="quiz.html">刷題
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+    </a>
+    <a class="nav-a" href="review.html">訂正
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+    </a>
+    <a class="nav-a" href="pricing.html">方案</a>
+  </div>
+  <div class="nav-gap"></div>
+  <a class="nav-plan" href="pricing.html">查看方案</a>
+</nav>
+
+<!-- Banner -->
+<div class="banner" id="banner">
+  <strong>🎉 Zentax 新同學限定：免費試用 set-01 完整題組</strong>
+  &nbsp;—&nbsp;現在就開始刷題！
+  <a class="banner-cta" href="quiz.html">立即試用</a>
+  <button class="banner-x" onclick="this.closest('.banner').remove()">✕</button>
+</div>
+
+<!-- Main -->
+<div class="main" id="main">
+  <div class="loading"><div class="spinner"></div></div>
+</div>
+
+<!-- Goal Modal -->
+<div class="modal-overlay" id="goalOverlay" onclick="closeGoalIfBg(event)">
+  <div class="modal" id="goalModal">
+    <div class="modal-head">
+      <div class="modal-head-l">
+        <span class="modal-tag2">30 秒設定</span>
+        <span class="modal-title">每日目標</span>
+      </div>
+      <button class="modal-x" onclick="closeGoal()">✕</button>
+    </div>
+
+    <!-- 考試日期 -->
+    <div class="modal-section">
+      <h3>考試日期</h3>
+      <div class="opt-grid-2">
+        <div class="opt sel" id="optDateToeic" onclick="selectExamDate('toeic')">
+          <div class="opt-main">多益考試</div>
+          <div class="opt-sub">2026/07/25</div>
+        </div>
+        <div class="opt" id="optDateCustom" onclick="selectExamDate('custom')">
+          <div class="opt-main">自訂日期</div>
+          <div class="opt-sub">像是期末考試或自訂複習日</div>
+        </div>
+      </div>
+      <div class="custom-date-row" id="customDateRow">
+        <input type="date" id="customDateInput" min="2026-06-10">
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <!-- 看考古題 -->
+    <div class="modal-section">
+      <h3>看考古題</h3>
+      <div class="opt-grid-3">
+        <div class="opt sel" id="examOpt0" onclick="selectOpt('exam',0,10)">
+          <div class="opt-main">10 題</div><div class="opt-sub">輕量</div>
+        </div>
+        <div class="opt" id="examOpt1" onclick="selectOpt('exam',1,20)">
+          <div class="opt-main">20 題</div><div class="opt-sub">建議</div>
+        </div>
+        <div class="opt" id="examOpt2" onclick="selectOpt('exam',2,30)">
+          <div class="opt-main">30 題</div><div class="opt-sub">加強</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分科刷題 -->
+    <div class="modal-section">
+      <h3>分科刷題</h3>
+      <div class="opt-grid-3">
+        <div class="opt sel" id="drillOpt0" onclick="selectOpt('drill',0,10)">
+          <div class="opt-main">10 題</div><div class="opt-sub">輕量</div>
+        </div>
+        <div class="opt" id="drillOpt1" onclick="selectOpt('drill',1,20)">
+          <div class="opt-main">20 題</div><div class="opt-sub">建議</div>
+        </div>
+        <div class="opt" id="drillOpt2" onclick="selectOpt('drill',2,30)">
+          <div class="opt-main">30 題</div><div class="opt-sub">衝刺</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 錯題回顧 -->
+    <div class="modal-section">
+      <h3>錯題回顧</h3>
+      <div class="opt-grid-3">
+        <div class="opt sel" id="reviewOpt0" onclick="selectOpt('review',0,5)">
+          <div class="opt-main">5 題</div><div class="opt-sub">輕量</div>
+        </div>
+        <div class="opt" id="reviewOpt1" onclick="selectOpt('review',1,10)">
+          <div class="opt-main">10 題</div><div class="opt-sub">建議</div>
+        </div>
+        <div class="opt" id="reviewOpt2" onclick="selectOpt('review',2,15)">
+          <div class="opt-main">15 題</div><div class="opt-sub">加強</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-note">儲存後，今天任務會依新的每日目標重新計算。</div>
+    <button class="modal-save" onclick="saveGoal()">儲存並更新今日任務</button>
+  </div>
+</div>
+
+<script>
+const BASE = 'https://kozh1025.github.io/-zentax/';
+
+function getGoals() {
+  try { return JSON.parse(localStorage.getItem('zentax_goals')) || {}; } catch { return {}; }
+}
+
+function getExamDate() {
+  const g = getGoals();
+  if (g.examType === 'custom' && g.customDate) return new Date(g.customDate);
+  return new Date('2026-07-25');
+}
+
+function daysLeft() {
+  const diff = getExamDate() - new Date();
+  return Math.max(0, Math.ceil(diff / 86400000));
+}
+
+// ── Modal logic ──
+const goalData = { exam: 10, drill: 10, review: 5, examType: 'toeic', customDate: '' };
+
+window.openGoal = function() {
+  const g = getGoals();
+  if (g.examType) goalData.examType = g.examType;
+  if (g.customDate) goalData.customDate = g.customDate;
+  if (g.examGoal)   goalData.exam   = g.examGoal;
+  if (g.drillGoal)  goalData.drill  = g.drillGoal;
+  if (g.reviewGoal) goalData.review = g.reviewGoal;
+  refreshModal();
+  document.getElementById('goalOverlay').classList.add('open');
+};
+
+window.closeGoal = function() {
+  document.getElementById('goalOverlay').classList.remove('open');
+};
+
+window.closeGoalIfBg = function(e) {
+  if (e.target === document.getElementById('goalOverlay')) closeGoal();
+};
+
+window.selectExamDate = function(type) {
+  goalData.examType = type;
+  document.getElementById('optDateToeic').classList.toggle('sel', type === 'toeic');
+  document.getElementById('optDateCustom').classList.toggle('sel', type === 'custom');
+  document.getElementById('customDateRow').classList.toggle('show', type === 'custom');
+};
+
+window.selectOpt = function(kind, idx, val) {
+  goalData[kind] = val;
+  for (let i = 0; i < 3; i++)
+    document.getElementById(kind + 'Opt' + i)?.classList.toggle('sel', i === idx);
+};
+
+function refreshModal() {
+  selectExamDate(goalData.examType);
+  if (goalData.customDate) document.getElementById('customDateInput').value = goalData.customDate;
+  const examVals = [10,20,30], drillVals = [10,20,30], reviewVals = [5,10,15];
+  examVals.forEach((v,i)   => document.getElementById('examOpt'+i)?.classList.toggle('sel', v === goalData.exam));
+  drillVals.forEach((v,i)  => document.getElementById('drillOpt'+i)?.classList.toggle('sel', v === goalData.drill));
+  reviewVals.forEach((v,i) => document.getElementById('reviewOpt'+i)?.classList.toggle('sel', v === goalData.review));
+}
+
+window.saveGoal = function() {
+  if (goalData.examType === 'custom') {
+    goalData.customDate = document.getElementById('customDateInput').value;
+  }
+  localStorage.setItem('zentax_goals', JSON.stringify({
+    examType:   goalData.examType,
+    customDate: goalData.customDate,
+    examGoal:   goalData.exam,
+    drillGoal:  goalData.drill,
+    reviewGoal: goalData.review
+  }));
+  closeGoal();
+  location.reload();
+};
+
+// ── Dashboard render ──
+(function renderDashboard() {
+  const goals     = getGoals();
+  const examGoal  = goals.examGoal   || 10;
+  const drillGoal = goals.drillGoal  || 10;
+  const revGoal   = goals.reviewGoal || 5;
+  const totalGoal = examGoal + drillGoal + revGoal;
+
+  const days      = daysLeft();
+  const streak    = 0;
+  const todayDone = 0;
+  const examDone  = 0;
+  const drillDone = 0;
+  const revDone   = 0;
+
+  const pct = 0;
+  const examDate = getExamDate();
+  const dateStr  = `${examDate.getMonth()+1}/${examDate.getDate()} 開始`;
+
+  document.getElementById('main').innerHTML = `
+    <div class="cd-label">距離下次多益考試 還有</div>
+    <div class="cd-row">
+      <span class="cd-num">${days}</span>
+      <span class="cd-unit">天</span>
+      <span class="cd-sub">${dateStr}・完成今日任務，就會回到本週安全區</span>
+    </div>
+
+    <div class="streak">
+      <div class="streak-l">
+        <div class="streak-fire">🔥</div>
+        <div>
+          <div class="streak-t">連續 ${streak} 天刷題</div>
+          <div class="streak-s">今天已接上，剩 ${Math.max(0, totalGoal - todayDone)} 題完成今日目標。</div>
+        </div>
+      </div>
+      <div class="streak-btns">
+        <a class="btn-fill" href="${BASE}set-01.html">開始刷題 →</a>
+        <a class="btn-outline" href="quiz.html">全部題組</a>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="pcard">
+        <div class="pcard-meta">今日任務・約 ${Math.ceil(totalGoal * 1.5)} 分鐘</div>
+        <div class="pcard-pct">今天完成 ${pct}%</div>
+        <div class="pcard-desc">再多刷幾題，完成後再進下一步。</div>
+        <div class="pbar-row">
+          <div class="pbar-count">已作答 ${todayDone} 題</div>
+          <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
+          <button class="goal-btn" onclick="openGoal()">⚙ 設定目標</button>
+        </div>
+        <a class="cont-btn" href="${BASE}set-01.html">
+          繼續看考古題
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <div class="steps-label">
+          讀 1 節講義 &nbsp;多益文法考點・約 15 分鐘
+          <span>可選補強</span>
+        </div>
+        <div class="steps-row">
+          <div class="step on" onclick="location.href='${BASE}set-01.html'">
+            <div class="step-n">1</div>
+            <div class="step-t">看考古題</div>
+            <div class="step-d">歷屆題目・先抓考法</div>
+            <div class="step-p">已看 ${examDone} / ${examGoal} 題</div>
+          </div>
+          <div class="step" onclick="location.href='quiz.html'">
+            <div class="step-n">2</div>
+            <div class="step-t">分科刷題</div>
+            <div class="step-d">熟悉題型後開始練習</div>
+            <div class="step-p">已刷 ${drillDone} / ${drillGoal} 題</div>
+          </div>
+          <div class="step" onclick="location.href='review.html'">
+            <div class="step-n">3</div>
+            <div class="step-t">訂正錯題</div>
+            <div class="step-d">錯題本・連錯題優先</div>
+            <div class="step-p">已訂正 ${revDone} / ${revGoal} 題</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-stack">
+        <div class="scard">
+          <div class="scard-t">看考古題</div>
+          <div class="scard-n">${examDone} / ${examGoal}</div>
+          <div class="sbar"><div class="sbar-fill" style="width:0%"></div></div>
+        </div>
+        <div class="scard">
+          <div class="scard-t">分科刷題</div>
+          <div class="scard-n">${drillDone} / ${drillGoal}</div>
+          <div class="sbar"><div class="sbar-fill" style="width:0%"></div></div>
+        </div>
+        <div class="scard">
+          <div class="scard-t">訂正錯題</div>
+          <div class="scard-n">${revDone} / ${revGoal}</div>
+          <div class="sbar"><div class="sbar-fill" style="width:0%"></div></div>
+        </div>
+        <div class="upsell">
+          <div class="upsell-t">🔒 升級解鎖全功能</div>
+          <div class="upsell-d">全部題組、錯題本<br>與完整進度追蹤</div>
+          <a class="upsell-btn" href="pricing.html">查看方案 →</a>
+        </div>
+      </div>
+    </div>`;
+})();
+</script>
+</body>
+</html>
