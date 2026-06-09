@@ -204,7 +204,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <h3>考試日期</h3>
       <div class="opt-grid-2">
         <div class="opt sel" id="optDateToeic" onclick="selectExamDate('toeic')">
-          <div class="opt-main">多益考試</div>
+          <div class="opt-main">英語考試</div>
           <div class="opt-sub">2026/07/25</div>
         </div>
         <div class="opt" id="optDateCustom" onclick="selectExamDate('custom')">
@@ -369,7 +369,7 @@ window.saveGoal = function() {
   const dateStr  = `${examDate.getMonth()+1}/${examDate.getDate()} 開始`;
 
   document.getElementById('main').innerHTML = `
-    <div class="cd-label">距離下次多益考試 還有</div>
+    <div class="cd-label">距離下次英語考試 還有</div>
     <div class="cd-row">
       <span class="cd-num">${days}</span>
       <span class="cd-unit">天</span>
@@ -405,7 +405,7 @@ window.saveGoal = function() {
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
         <div class="steps-label">
-          讀 1 節講義 &nbsp;多益文法考點・約 15 分鐘
+          讀 1 節講義 &nbsp;英語文法考點・約 15 分鐘
           <span>可選補強</span>
         </div>
         <div class="steps-row">
