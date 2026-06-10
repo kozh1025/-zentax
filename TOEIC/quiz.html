@@ -53,6 +53,29 @@ body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;color:
 .error-t{font-size:1em;font-weight:700;color:var(--navy);margin-bottom:8px}
 .error-s{font-size:.84em;color:var(--muted)}
 
+/* ── Score Result Modal ── */
+.sr-mask{display:none;position:fixed;inset:0;background:rgba(15,28,63,.55);z-index:900;align-items:center;justify-content:center;padding:20px}
+.sr-mask.open{display:flex}
+.sr-box{background:#1a3557;border-radius:22px;padding:36px 28px 28px;max-width:360px;width:100%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.sr-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.12);border:none;border-radius:50%;width:28px;height:28px;color:#fff;font-size:1em;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.sr-label{font-size:.72em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px}
+.sr-ring{width:108px;height:108px;border-radius:50%;border:5px solid rgba(201,146,42,.25);background:rgba(201,146,42,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px}
+.sr-num{font-size:2.4em;font-weight:800;color:#f0b940;line-height:1}
+.sr-den{font-size:.78em;color:rgba(255,255,255,.4);margin-top:2px}
+.sr-msg{font-size:1.02em;font-weight:700;color:#fff;margin-bottom:4px}
+.sr-rate{font-size:.85em;color:rgba(255,255,255,.45);margin-bottom:20px}
+.sr-bar-wrap{margin-bottom:22px}
+.sr-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.sr-bar-fill{height:100%;background:linear-gradient(90deg,#c9922a,#f0b940);border-radius:3px;transition:width 1s cubic-bezier(.4,0,.2,1) .2s;width:0%}
+.sr-pass{display:inline-block;font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:20px}
+.sr-pass.ok{background:rgba(52,199,89,.15);color:#4ade80;border:1px solid rgba(74,222,128,.3)}
+.sr-pass.fail{background:rgba(255,100,100,.12);color:#f87171;border:1px solid rgba(248,113,113,.3)}
+.sr-btns{display:flex;gap:10px}
+.sr-btn-back{flex:1;padding:11px;border-radius:10px;font-size:.84em;font-weight:700;text-align:center;background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:background .15s}
+.sr-btn-back:hover{background:rgba(255,255,255,.2)}
+.sr-btn-review{flex:1;padding:11px;border-radius:10px;font-size:.84em;font-weight:700;text-align:center;background:#c9922a;color:#fff;border:none;cursor:pointer;text-decoration:none;transition:opacity .15s}
+.sr-btn-review:hover{opacity:.85}
+
 /* ── Exam Switcher ─── */
 .exam-sw{position:relative;margin-left:8px}
 .exam-sw-btn{display:flex;align-items:center;gap:6px;background:#f8fafc;border:1.5px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.82em;font-weight:600;color:var(--text);transition:all .15s;white-space:nowrap}
@@ -90,6 +113,26 @@ body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;color:
   <a class="nav-plan" href="pricing.html">查看方案</a>
 <div class="exam-sw" id="examSw"><button class="exam-sw-btn" onclick="toggleExamSw(event)"><span class="exam-sw-dot toeic">T</span><span class="exam-sw-name">TOEIC</span><svg class="exam-sw-chevron" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="exam-sw-menu" id="examSwMenu"><div class="exam-sw-hd">選擇考種</div><a class="exam-sw-item on" href="index.html"><span class="exam-sw-dot toeic">T</span><div><div class="exam-sw-iname">TOEIC 英語</div><div class="exam-sw-isub">商務英語能力測驗</div></div><svg class="exam-sw-chk" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a><a class="exam-sw-item" href="../GEPT/index.html"><span class="exam-sw-dot gept">G</span><div><div class="exam-sw-iname">GEPT 全民英檢</div><div class="exam-sw-isub">全民英語能力分級檢定</div></div></a></div></div><script>window.toggleExamSw=function(e){e.stopPropagation();document.getElementById("examSwMenu").classList.toggle("open")};document.addEventListener("click",function(){var m=document.getElementById("examSwMenu");if(m)m.classList.remove("open")});</script></nav>
 
+<!-- Score Result Modal -->
+<div class="sr-mask" id="srMask">
+  <div class="sr-box">
+    <button class="sr-close" onclick="closeSR()">✕</button>
+    <div class="sr-label" id="srLabel">上次成績</div>
+    <div class="sr-ring">
+      <div class="sr-num" id="srNum">–</div>
+      <div class="sr-den" id="srDen">/ –</div>
+    </div>
+    <div class="sr-msg" id="srMsg"></div>
+    <div class="sr-rate" id="srRate"></div>
+    <span class="sr-pass" id="srPass"></span>
+    <div class="sr-bar-wrap"><div class="sr-bar"><div class="sr-bar-fill" id="srBarFill"></div></div></div>
+    <div class="sr-btns">
+      <button class="sr-btn-back" onclick="closeSR()">關閉</button>
+      <a class="sr-btn-review" href="review.html">前往錯題本 →</a>
+    </div>
+  </div>
+</div>
+
 <div class="page-header">
   <div class="page-header-inner">
     <h1>刷題</h1>
@@ -102,6 +145,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;color:
 </div>
 
 <script>
+// Show last score if returning from a set
+(function(){
+  var sc=null;
+  try{sc=JSON.parse(localStorage.getItem('zentax_last_score')||'null');}catch(e){}
+  if(!sc)return;
+  localStorage.removeItem('zentax_last_score');
+  var msg=sc.p>=80?'🎉 表現優異！':sc.p>=60?'👍 答得不錯！':'💪 繼續加油！';
+  document.getElementById('srLabel').textContent=sc.n||'上次成績';
+  document.getElementById('srNum').textContent=sc.c;
+  document.getElementById('srDen').textContent='/ '+sc.t+' 題';
+  document.getElementById('srMsg').textContent=msg;
+  document.getElementById('srRate').textContent='正確率 '+sc.p+'%';
+  var pass=document.getElementById('srPass');
+  if(sc.p>=60){pass.textContent='✓ 及格';pass.className='sr-pass ok';}
+  else{pass.textContent='✗ 未及格';pass.className='sr-pass fail';}
+  document.getElementById('srMask').classList.add('open');
+  setTimeout(function(){var f=document.getElementById('srBarFill');if(f)f.style.width=sc.p+'%';},200);
+})();
+function closeSR(){document.getElementById('srMask').classList.remove('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSR();});
+
 const REPO = 'kozh1025/-zentax';
 const API  = `https://api.github.com/repos/${REPO}/contents/`;
 const BASE = `https://kozh1025.github.io/-zentax/TOEIC/`;

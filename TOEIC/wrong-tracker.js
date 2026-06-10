@@ -34,16 +34,14 @@
     }
   };
 
-  /* Auto-hook: override submitAll after the page script defines it */
-  window.addEventListener('DOMContentLoaded', function () {
-    var _orig = window.submitAll;
-    if (typeof _orig !== 'function') return;
-
+  /* Hook submitAll — this script loads synchronously after the page's inline scripts, so submitAll is already defined */
+  var _orig = window.submitAll;
+  if (typeof _orig === 'function') {
     window.submitAll = function () {
       _orig.apply(this, arguments);
       _hookRecord();
     };
-  });
+  }
 
   function _hookRecord() {
     if (typeof allQids !== 'function' || typeof getAns !== 'function' || typeof userAns === 'undefined') return;

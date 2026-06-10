@@ -241,7 +241,7 @@ function submitAll(){
     var dot=document.getElementById('dot_'+qid);
     if(dot){dot.classList.remove('answered');dot.classList.add(ua===ans?'correct':'wrong');}
   });
-  var pct=Math.round(correct/all.length*100);
+  var pct=Math.round(correct/all.length*100);try{var _ht=document.querySelector('.hd-title');localStorage.setItem('zentax_last_score',JSON.stringify({n:_ht?_ht.textContent.trim():'題組',c:correct,t:all.length,p:pct,d:new Date().toISOString().slice(0,10)}));}catch(_e){}
   var msg=pct>=80?'🎉 表現優異！':pct>=60?'👍 答得不錯！':'💪 繼續加油！';
   var sc=document.getElementById('scoreCard');
   sc.innerHTML='<div class="sc-ring"><div class="sc-num">'+correct+'</div><div class="sc-den">/ '+all.length+'</div></div>'
