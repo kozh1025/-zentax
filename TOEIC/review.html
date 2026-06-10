@@ -94,7 +94,38 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .exam-sw-item.on{background:#eff6ff}
 .exam-sw-iname{font-size:.84em;font-weight:700;color:var(--text);line-height:1.2}
 .exam-sw-isub{font-size:.71em;color:var(--muted);margin-top:2px}
-.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}</style>
+.exam-sw-chk{color:#2563eb;margin-left:auto;flex-shrink:0}
+
+/* ── Detail Modal ── */
+.dm-mask{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;align-items:center;justify-content:center;padding:16px}
+.dm-mask.open{display:flex}
+.dm-box{background:#fff;border-radius:16px;width:100%;max-width:680px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+.dm-head{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.dm-set-tag{font-size:.68em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);flex-shrink:0}
+.dm-title{flex:1;font-size:.9em;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dm-close{width:32px;height:32px;border:none;background:#f1f5f9;border-radius:8px;cursor:pointer;font-size:1.05em;color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.dm-close:hover{background:#e2e8f0}
+.dm-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.dm-qtext{font-size:.92em;font-weight:600;color:var(--text);line-height:1.65}
+.dm-qztext{font-size:.8em;color:var(--muted);margin-top:6px;line-height:1.6;border-left:3px solid var(--bd);padding-left:10px}
+.dm-opts{display:flex;flex-direction:column;gap:6px}
+.dm-opt{display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-radius:8px;border:1.5px solid var(--bd);font-size:.85em}
+.dm-opt.correct{border-color:#16a34a;background:#f0fdf4}
+.dm-opt.wrong{border-color:#dc2626;background:#fef2f2}
+.dm-opt-lbl{font-weight:800;font-size:.9em;flex-shrink:0;width:18px}
+.dm-opt.correct .dm-opt-lbl{color:#16a34a}
+.dm-opt.wrong .dm-opt-lbl{color:#dc2626}
+.dm-opt-word{font-weight:700;color:var(--text);flex-shrink:0}
+.dm-opt-pos{font-size:.78em;color:var(--muted);flex-shrink:0}
+.dm-opt-zh{font-size:.78em;color:var(--muted)}
+.dm-ana{display:flex;flex-direction:column;gap:8px}
+.dm-ana-block{border-radius:8px;padding:10px 13px;font-size:.83em;line-height:1.7;color:var(--text)}
+.dm-ana-block.key{background:#eff6ff;border-left:4px solid var(--blue)}
+.dm-ana-block.trap{background:#fffbeb;border-left:4px solid var(--amber)}
+.dm-ana-block.gram{background:#f0fdf4;border-left:4px solid #16a34a}
+.dm-ana-lbl{font-weight:800;font-size:.75em;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;opacity:.7}
+.dm-no-detail{text-align:center;padding:32px;color:var(--muted);font-size:.85em}
+</style>
 </head>
 <body>
 
@@ -122,6 +153,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <div class="wrap" id="mainWrap"></div>
+
+<!-- Detail Modal -->
+<div class="dm-mask" id="dmMask" onclick="closeDmOnMask(event)">
+  <div class="dm-box" id="dmBox">
+    <div class="dm-head">
+      <span class="dm-set-tag" id="dmSetTag"></span>
+      <span class="dm-title" id="dmTitle">詳解</span>
+      <button class="dm-close" onclick="closeDetail()" title="關閉">✕</button>
+    </div>
+    <div class="dm-body" id="dmBody"></div>
+  </div>
+</div>
 
 <script>
 var BASE = 'https://kozh1025.github.io/-zentax/TOEIC/';
@@ -219,7 +262,7 @@ function render() {
         + '<div class="witem-meta">'+badgeHtml+'<span class="witem-date">'+e.lastDate+'</span></div>'
         + '</div>'
         + '<button class="witem-star'+(e.starred?' on':'')+'" onclick="toggleStar(\''+e.qid+'\')" title="加星標記">★</button>'
-        + '<a class="witem-btn" href="'+setLink+'" target="_blank">複習 →</a>'
+        + '<button class="witem-btn" onclick="showDetail(\''+e.qid.replace(/'/g,"\\'")+'\')" >複習 →</button>'
         + '</div>';
     });
     html += '</div>';
@@ -250,6 +293,77 @@ window.clearAll = function() {
 };
 
 render();
+
+/* ── Detail Modal ── */
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+window.showDetail = function(qid) {
+  var data = getData();
+  var entry = data[qid];
+  if (!entry) return;
+
+  document.getElementById('dmSetTag').textContent = entry.setName || '';
+  document.getElementById('dmTitle').textContent  = entry.question || qid;
+
+  var body = '';
+  var det  = entry._detail;
+
+  if (!det) {
+    body = '<div class="dm-no-detail">這題尚無詳解資料。<br>請重新作答並提交該份題目後，詳解將自動儲存。</div>';
+  } else {
+    /* Question text */
+    if (det.qText) {
+      body += '<div class="dm-qtext">'+escHtml(det.qText)+'</div>';
+    }
+    if (det.qzText) {
+      body += '<div class="dm-qztext">'+escHtml(det.qzText)+'</div>';
+    }
+
+    /* Options */
+    if (det.opts && det.opts.length) {
+      body += '<div class="dm-opts">';
+      det.opts.forEach(function(o) {
+        var cls = o.correct ? ' correct' : (o.wrong ? ' wrong' : '');
+        body += '<div class="dm-opt'+cls+'">'
+          + '<span class="dm-opt-lbl">'+escHtml(o.lbl)+'</span>'
+          + '<span class="dm-opt-word">'+escHtml(o.word)+'</span>'
+          + (o.pos  ? '<span class="dm-opt-pos">'+escHtml(o.pos)+'</span>' : '')
+          + (o.zh   ? '<span class="dm-opt-zh">'+escHtml(o.zh)+'</span>'  : '')
+          + '</div>';
+      });
+      body += '</div>';
+    }
+
+    /* Analysis blocks */
+    var hasAna = det.key || det.trap || det.gram;
+    if (hasAna) {
+      body += '<div class="dm-ana">';
+      if (det.key)  body += '<div class="dm-ana-block key"><div class="dm-ana-lbl">解題關鍵</div>'+escHtml(det.key)+'</div>';
+      if (det.trap) body += '<div class="dm-ana-block trap"><div class="dm-ana-lbl">常見陷阱</div>'+escHtml(det.trap)+'</div>';
+      if (det.gram) body += '<div class="dm-ana-block gram"><div class="dm-ana-lbl">文法解析</div>'+escHtml(det.gram)+'</div>';
+      body += '</div>';
+    }
+  }
+
+  document.getElementById('dmBody').innerHTML = body;
+  document.getElementById('dmMask').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeDetail = function() {
+  document.getElementById('dmMask').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.closeDmOnMask = function(e) {
+  if (e.target === document.getElementById('dmMask')) closeDetail();
+};
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDetail();
+});
 </script>
 </body>
 </html>

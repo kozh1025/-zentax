@@ -34,13 +34,52 @@
     }
   };
 
-  /* Hook submitAll — this script loads synchronously after the page's inline scripts, so submitAll is already defined */
+  /* Hook submitAll */
   var _orig = window.submitAll;
   if (typeof _orig === 'function') {
     window.submitAll = function () {
       _orig.apply(this, arguments);
       _hookRecord();
     };
+  }
+
+  function _captureDetail(qid) {
+    var dotEl = document.getElementById('dot_' + qid);
+    if (!dotEl) return null;
+    var card = dotEl.closest('.qc');
+    if (!card) return null;
+
+    var d = { qid: qid, qText: '', qzText: '', opts: [], key: '', trap: '', gram: '' };
+
+    var qeEl = card.querySelector('.qe');
+    if (qeEl) d.qText = qeEl.textContent.replace(/\s+/g, ' ').trim();
+
+    var qzEl = card.querySelector('.qz');
+    if (qzEl) d.qzText = qzEl.textContent.replace(/\s+/g, ' ').trim();
+
+    card.querySelectorAll('.opt').forEach(function (optEl) {
+      var lbl  = optEl.querySelector('.opt-lbl')  ? optEl.querySelector('.opt-lbl').textContent.trim()  : '';
+      var word = optEl.querySelector('.opt-word') ? optEl.querySelector('.opt-word').textContent.trim() : '';
+      var pos  = optEl.querySelector('.opt-pos')  ? optEl.querySelector('.opt-pos').textContent.trim()  : '';
+      var zh   = optEl.querySelector('.opt-zh')   ? optEl.querySelector('.opt-zh').textContent.trim()   : '';
+      d.opts.push({
+        lbl:     lbl,
+        word:    word,
+        pos:     pos,
+        zh:      zh,
+        correct: optEl.classList.contains('correct'),
+        wrong:   optEl.classList.contains('wrong')
+      });
+    });
+
+    var anaKey  = card.querySelector('.ana-key');
+    var anaTrap = card.querySelector('.ana-trap');
+    var anaGram = card.querySelector('.ana-gram');
+    if (anaKey)  d.key  = anaKey.textContent.replace(/\s+/g, ' ').trim();
+    if (anaTrap) d.trap = anaTrap.textContent.replace(/\s+/g, ' ').trim();
+    if (anaGram) d.gram = anaGram.textContent.replace(/\s+/g, ' ').trim();
+
+    return d;
   }
 
   function _hookRecord() {
@@ -66,5 +105,18 @@
 
       T.record(qid, setName, qtText, ua === ans);
     });
+
+    /* Second pass: store structured detail for every answered question */
+    var data = T.getAll();
+    var dirty = false;
+    allQids().forEach(function (qid) {
+      if (userAns[qid] === undefined) return;
+      var det = _captureDetail(qid);
+      if (det && data[qid]) {
+        data[qid]._detail = det;
+        dirty = true;
+      }
+    });
+    if (dirty) T._save(data);
   }
 })();
