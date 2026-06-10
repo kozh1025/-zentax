@@ -53,6 +53,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;color:
 .error-t{font-size:1em;font-weight:700;color:var(--navy);margin-bottom:8px}
 .error-s{font-size:.84em;color:var(--muted)}
 
+/* Level section */
+.section-block{margin-bottom:32px}
+.section-score{font-size:.82em;font-weight:500;color:var(--muted)}
+/* Card level badge */
+.card-badge{display:inline-flex;align-items:center;gap:4px;font-size:.67em;font-weight:800;padding:3px 9px;border-radius:5px;border:1.5px solid;margin-bottom:8px;letter-spacing:.04em}
+.card-score{font-size:.77em;color:var(--muted);margin-bottom:14px}
+
 /* ── Score Result Modal ── */
 .sr-mask{display:none;position:fixed;inset:0;background:rgba(15,28,63,.55);z-index:900;align-items:center;justify-content:center;padding:20px}
 .sr-mask.open{display:flex}
@@ -175,6 +182,37 @@ const EXCLUDE = new Set([
   'pricing.html','dashboard.html','privacy.html','refund.html','terms.html'
 ]);
 
+const LEVEL_CONFIG = {
+  '金': { emoji:'🥇', color:'#b45309', bg:'#fffbeb', score:'855 ~ 990', label:'金級' },
+  '藍': { emoji:'🔵', color:'#2563eb', bg:'#eff6ff', score:'730 ~ 855', label:'藍級' },
+  '綠': { emoji:'🟢', color:'#16a34a', bg:'#f0fdf4', score:'595 ~ 730', label:'綠級' },
+  '棕': { emoji:'🟤', color:'#a16207', bg:'#fefce8', score:'550 ~ 595', label:'棕級' },
+  '橘': { emoji:'🟠', color:'#ea580c', bg:'#fff7ed', score:'495 ~ 550', label:'橘級' },
+};
+const LEVEL_ORDER = ['金','藍','綠','棕','橘',''];
+
+function parseLevel(name) {
+  const m = name.match(/^([橘棕綠藍金])-/);
+  return m ? m[1] : '';
+}
+
+function cardHTML(f) {
+  const lv  = parseLevel(f.name);
+  const cfg = LEVEL_CONFIG[lv];
+  const num = f.name.match(/\d+/)?.[0] || '';
+  const badge = cfg
+    ? `<div class="card-badge" style="background:${cfg.bg};color:${cfg.color};border-color:${cfg.color}44">${cfg.emoji} ${cfg.label}</div>`
+    : `<div class="card-num">TOEIC · SET ${num||'–'}</div>`;
+  const title = cfg ? `Vol.&nbsp;${num}` : (num ? `題組 ${num}` : f.name.replace(/\.html$/i,''));
+  const sub   = cfg ? `<div class="card-score">${cfg.score} 分</div>` : '';
+  return `<a class="card" href="${BASE}${f.name}">
+    ${badge}
+    <div class="card-title">${title}</div>
+    ${sub}
+    <div class="card-link">開始作答 →</div>
+  </a>`;
+}
+
 async function init() {
   try {
     const res = await fetch(API);
@@ -185,13 +223,36 @@ async function init() {
       !EXCLUDE.has(f.name.toLowerCase())
     ).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
-    document.getElementById('subtitle').textContent =
-      files.length ? `共 ${files.length} 份題組，點選開始作答` : '暫無題組';
+    if (!files.length) {
+      document.getElementById('subtitle').textContent = '暫無題組';
+      document.getElementById('wrap').innerHTML =
+        `<div class="error-state"><div class="error-t">暫無題組</div><div class="error-s">題組上架後會自動顯示於此</div></div>`;
+      return;
+    }
 
-    document.getElementById('wrap').innerHTML = files.length
-      ? `<div class="section-label">全部題組</div>
-         <div class="grid">${files.map(cardHTML).join('')}</div>`
-      : `<div class="error-state"><div class="error-t">暫無題組</div><div class="error-s">題組上架後會自動顯示於此</div></div>`;
+    // 按顏色等級分組
+    const groups = {};
+    files.forEach(f => {
+      const lv = parseLevel(f.name);
+      (groups[lv] || (groups[lv] = [])).push(f);
+    });
+
+    let html = '';
+    LEVEL_ORDER.forEach(lv => {
+      if (!groups[lv] || !groups[lv].length) return;
+      const cfg = LEVEL_CONFIG[lv];
+      const sectionHead = cfg
+        ? `${cfg.emoji} <span style="color:${cfg.color};font-weight:800">${cfg.label}</span> <span class="section-score">· ${cfg.score} 分</span>`
+        : '其他題組';
+      html += `<div class="section-block">
+        <div class="section-label">${sectionHead}</div>
+        <div class="grid">${groups[lv].map(cardHTML).join('')}</div>
+      </div>`;
+    });
+
+    document.getElementById('subtitle').textContent = `共 ${files.length} 份題組，點選開始作答`;
+    document.getElementById('wrap').innerHTML = html;
+
   } catch(e) {
     document.getElementById('subtitle').textContent = '載入失敗';
     document.getElementById('wrap').innerHTML = `
@@ -200,16 +261,6 @@ async function init() {
         <div class="error-s">請檢查網路連線後重新整理</div>
       </div>`;
   }
-}
-
-function cardHTML(f) {
-  const num   = f.name.match(/\d+/)?.[0] || '';
-  const label = num ? `題組 ${num}` : f.name.replace(/\.html$/i, '');
-  return `<a class="card" href="${BASE}${f.name}">
-    <div class="card-num">TOEIC · SET ${num || '–'}</div>
-    <div class="card-title">${label}</div>
-    <div class="card-link">開始作答 →</div>
-  </a>`;
 }
 
 init();
