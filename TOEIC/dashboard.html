@@ -291,7 +291,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <script>
-const BASE = 'https://kozh1025.github.io/-zentax/TOEIC/';
+const BASE = 'https://kozh1025.github.io/-zentax/TOEIC/考題/';
 
 function getGoals() {
   try { return JSON.parse(localStorage.getItem('zentax_goals')) || {}; } catch { return {}; }
@@ -403,7 +403,7 @@ window.saveGoal = function() {
         </div>
       </div>
       <div class="streak-btns">
-        <a class="btn-fill" href="${BASE}set-01.html">開始刷題 →</a>
+        <a class="btn-fill" href="${BASE}藍-01.html">開始刷題 →</a>
         <a class="btn-outline" href="quiz.html">全部題組</a>
       </div>
     </div>
@@ -418,7 +418,7 @@ window.saveGoal = function() {
           <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
           <button class="goal-btn" onclick="openGoal()">⚙ 設定目標</button>
         </div>
-        <a class="cont-btn" href="${BASE}set-01.html">
+        <a class="cont-btn" href="${BASE}藍-01.html">
           繼續看考古題
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
@@ -427,7 +427,7 @@ window.saveGoal = function() {
           <span>可選補強</span>
         </div>
         <div class="steps-row">
-          <div class="step on" onclick="location.href='${BASE}set-01.html'">
+          <div class="step on" onclick="location.href='${BASE}藍-01.html'">
             <div class="step-n">1</div>
             <div class="step-t">看考古題</div>
             <div class="step-d">歷屆題目・先抓考法</div>
