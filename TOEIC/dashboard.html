@@ -383,6 +383,10 @@ window.saveGoal = function() {
   const revDone   = 0;
 
   const pct = 0;
+  const lastSet     = localStorage.getItem('zentax_last_set') || '藍-01.html';
+  const continueHref = BASE + encodeURIComponent(lastSet);
+  const continueNum  = lastSet.match(/\d+/)?.[0] || '01';
+  const continueLabel = lastSet === '藍-01.html' ? '從頭開始' : `上次：Vol.${continueNum}`;
   const examDate = getExamDate();
   const dateStr  = `${examDate.getMonth()+1}/${examDate.getDate()} 開始`;
 
@@ -418,8 +422,8 @@ window.saveGoal = function() {
           <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
           <button class="goal-btn" onclick="openGoal()">⚙ 設定目標</button>
         </div>
-        <a class="cont-btn" href="${BASE}藍-01.html">
-          繼續看考古題
+        <a class="cont-btn" href="${continueHref}">
+          繼續看考古題 <span style="font-size:.78em;opacity:.65;font-weight:500">${continueLabel}</span>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
         <div class="steps-label">
@@ -427,7 +431,7 @@ window.saveGoal = function() {
           <span>可選補強</span>
         </div>
         <div class="steps-row">
-          <div class="step on" onclick="location.href='${BASE}藍-01.html'">
+          <div class="step on" onclick="location.href='${continueHref}'">
             <div class="step-n">1</div>
             <div class="step-t">看考古題</div>
             <div class="step-d">歷屆題目・先抓考法</div>

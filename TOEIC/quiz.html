@@ -217,6 +217,10 @@ function isDone(filename) {
   return localStorage.getItem('zentax_done_' + filename) === '1';
 }
 
+function saveLastSet(filename) {
+  localStorage.setItem('zentax_last_set', filename);
+}
+
 function toggleDone(e, filename, btn) {
   e.stopPropagation();
   const done = isDone(filename);
@@ -249,7 +253,7 @@ function cardHTML(f) {
   const title = cfg ? `Vol.&nbsp;${num}` : (num ? `題組 ${num}` : f.name.replace(/\.html$/i,''));
   const done  = isDone(f.name);
   return `<div class="card-wrap">
-    <a class="card" href="${BASE}${encodeURIComponent(f.name)}">
+    <a class="card" href="${BASE}${encodeURIComponent(f.name)}" onclick="saveLastSet('${f.name}')">
       ${badge}
       <div class="card-title">${title}</div>
       <div class="card-link">開始作答 →</div>
